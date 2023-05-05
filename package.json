@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./src/bin/www",
+    "startWithStub": "npm run startBFFStub && npm start",
+    "startBFFStub": "specmatic stub --port 9000 > /dev/null 2>&1 & sleep 3",
     "test": "jest"
   },
   "dependencies": {
