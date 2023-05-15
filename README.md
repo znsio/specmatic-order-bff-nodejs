@@ -1,4 +1,5 @@
 # Specmatic Sample: NodeJS BFF calling Domain API
+![tests](https://github.com/znsio/specmatic-order-backend-nodejs/actions/workflows/test.yml/badge.svg)
 
 * [Specmatic Website](https://specmatic.in)
 * [Specmatic Documenation](https://specmatic.in/documentation.html)

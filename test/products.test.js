@@ -1,30 +1,31 @@
-const { startStubServer } = require('specmatic');
-var exec = require('child_process').exec;
+const { startStub, stopStub } = require('specmatic');
+const specmatic = require('specmatic');
 var request = require('supertest');
 var app = require('../src/app.js');
 
+var server;
+
 beforeAll(async () => {
-    startStubServer('', '', 'localhost', 9000);
-    await sleep(5000);
+    server = await startStub('localhost', '9000');
 }, 10000);
 
-test('Find Products', (done) => {
+test('Access api on stub server', done => {
     request(app)
         .get('/findAvailableProducts?type=test')
+        .accept('application/json')
         .expect(200)
-        .then((res) => {
+        .then(res => {
             expect(Array.isArray(res.body)).toBeTruthy();
-			expect(res.body.length).toEqual(1);
+            expect(res.body.length).toEqual(1);
             done();
         });
-});
+}, 5000);
+
+test('Run contract tests', async () => {
+    const result = await specmatic.test('resources/api_order_v1.yaml', 'localhost', '9000');
+    expect(result).toBeFalsy();
+}, 10000);
 
 afterAll(() => {
-    exec('kill -9 $(lsof -t -i:9000)');
-}, 2000);
-
-function sleep(ms) {
-    return new Promise(resolve => {
-        setTimeout(resolve, ms);
-    });
-}
+    stopStub(server);
+});
