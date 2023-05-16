@@ -1,15 +1,19 @@
-const { startStub, stopStub } = require('specmatic');
+const { startStub, stopStub, setExpectations } = require('specmatic');
 const specmatic = require('specmatic');
 var request = require('supertest');
 var app = require('../src/app.js');
+var http = require('http');
 
-var server;
+app.set('port', 8080);
+
+var stub;
 
 beforeAll(async () => {
-    server = await startStub('localhost', '9000');
+    stub = await startStub();
+    await setExpectations('resources/data/products.json');
 }, 10000);
 
-test('Access api on stub server', done => {
+test('Single end point', done => {
     request(app)
         .get('/findAvailableProducts?type=test')
         .accept('application/json')
@@ -21,11 +25,19 @@ test('Access api on stub server', done => {
         });
 }, 5000);
 
-test('Run contract tests', async () => {
-    const result = await specmatic.test('resources/api_order_v1.yaml', 'localhost', '9000');
-    expect(result).toBeFalsy();
+test('Run contract tests', function (done) {
+    const server = http.createServer(app);
+    server.listen(8080);
+    server.on('listening', async () => {
+        console.log(server.address());
+        const result = await specmatic.test('localhost', 8080);
+        expect(result).toBeTruthy();
+        server.close(() => {
+            done();
+        });
+    });
 }, 10000);
 
 afterAll(() => {
-    stopStub(server);
+    stopStub(stub);
 });
