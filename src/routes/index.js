@@ -13,4 +13,15 @@ router.get('/findAvailableProducts', function (req, res, next) {
         .catch(err => console.log('Error: ', err.message));
 });
 
+router.post('/createOrder', function (req, res, next) {
+    axios.post('http://localhost:9000/orders', req.body)
+        .then((apiRes) => {
+            res.send({ status: true });
+        })
+        .catch(err => {
+            console.log('Error: ', err.message);
+            res.send({ status: false });
+        });
+});
+
 module.exports = router;
