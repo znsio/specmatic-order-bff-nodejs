@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "jest": "^29.5.0",
-    "specmatic": "^0.67.4",
+    "specmatic": "^0.67.5",
     "supertest": "^6.3.3"
   }
 }
