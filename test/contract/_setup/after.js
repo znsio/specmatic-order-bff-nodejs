@@ -11,6 +11,7 @@ const stopServer = () => {
                 console.info('Stopped BFF server');
                 resolve();
             }
+            process.exit(0);
         });
     });
 };
