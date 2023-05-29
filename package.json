@@ -6,7 +6,7 @@
     "start": "node ./src/bin/www",
     "startWithStub": "npm run startBFFStub && npm start",
     "startBFFStub": "specmatic stub resources/api_order_v1.yaml --data resources/data --port 9000",
-    "test": "jest --globalSetup '<rootDir>/test/contract/_setup/before.js' --globalTeardown '<rootDir>/test/contract/_setup/after.js' --detectOpenHandles"
+    "test": "jest --globalSetup '<rootDir>/test/contract/_setup/before.js' --globalTeardown '<rootDir>/test/contract/_setup/after.js'"
   },
   "dependencies": {
     "axios": "^1.4.0",
