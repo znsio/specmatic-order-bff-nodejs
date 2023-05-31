@@ -12,9 +12,10 @@ jobs:
             node-version: [14.x, 16.x, 18.x, 20.x]
         runs-on: ubuntu-latest
         steps:
-          - run: cat /etc/hosts
+          # Node 18 does resolves localhost to ipv6 address by default but refuses any connection to it
+          # Fix this by changing DNS entries in /etc/hosts file to resolve localhost to ipv4 address
+          # https://stackoverflow.com/questions/72648487/node-js-16-17-changed-resolution-of-localhost
           - run: sudo sed -i '/localhost/c\127.0.0.1 localhost' /etc/hosts
-          - run: cat /etc/hosts
           - uses: actions/checkout@v3
           - uses: actions/setup-node@v3
             with:
