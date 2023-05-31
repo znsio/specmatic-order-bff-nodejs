@@ -7,11 +7,16 @@ on:
 
 jobs:
     test:
+        strategy:
+          matrix:
+            node-version: [14.x, 16.x, 18.x, 20.x]
         runs-on: ubuntu-latest
         steps:
+          # - name: Add ipv4 mapping for localhost to fix issues in node 18
+          #   run: sudo echo "127.0.0.1 localhost" | sudo tee -a /etc/hosts
           - uses: actions/checkout@v3
           - uses: actions/setup-node@v3
             with:
-              node-version: 14
+              node-version: ${{ matrix.node-version }}
           - run: npm install
           - run: npm test
