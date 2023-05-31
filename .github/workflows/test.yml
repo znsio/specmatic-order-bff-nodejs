@@ -13,7 +13,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - run: cat /etc/hosts
-          - run: sudo echo "127.0.0.1 localhost" | sudo tee -a /etc/hosts
+          - run: sudo sed -i '/localhost/c\127.0.0.1 localhost' /etc/hosts
           - run: cat /etc/hosts
           - uses: actions/checkout@v3
           - uses: actions/setup-node@v3
