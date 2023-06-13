@@ -1,0 +1,4 @@
+{
+  "globalSetup": "<rootDir>/test/contract/_setup/before.js",
+  "globalTeardown": "<rootDir>/test/contract/_setup/after.js"
+}
