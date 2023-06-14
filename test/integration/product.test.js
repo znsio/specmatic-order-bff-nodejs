@@ -1,8 +1,10 @@
-const { setExpectations } = require('specmatic');
+const { setExpectations, stopStub, startStub } = require('specmatic');
 var request = require('supertest');
 var app = require('../../src/app.js');
+var stub;
 
 beforeAll(async () => {
+    stub = await startStub();
     await setExpectations('test-resources/products.json');
 }, 10000);
 
@@ -17,3 +19,7 @@ test('findAvailableProducts gives a list of products', done => {
             done();
         });
 }, 5000);
+
+afterAll(() => {
+    stopStub(stub);
+});
