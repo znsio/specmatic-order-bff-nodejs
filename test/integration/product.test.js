@@ -5,7 +5,7 @@ var stub;
 
 beforeAll(async () => {
     stub = await startStub();
-    await setExpectations('test-resources/products.json');
+    await setExpectations('test-resources/products.json', stub.url);
 }, 10000);
 
 test('findAvailableProducts gives a list of products', done => {
