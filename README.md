@@ -23,25 +23,28 @@ _The architecture diagram was created using the amazing free online SVG editor a
 ### Tech
 1. NodeJS + Express
 2. Specmatic
-3. Jest & SuperTest
+3. Specmatic Beta extension for kafka demo
+4. Jest & SuperTest
 
 ### Start BFF Server
 This will start the nodejs based backend api server
 ```shell
 DEBUG=specmatic-order-backend-nodejs:* npm start
 ```
-Access find orders api at http://localhost:8080/findAvailableProducts
+Access find orders api at http://localhost:8080/findAvailableProducts. This is used for OpenAPI demo
+Access email registration api at http://localhost:8080/email. This is used for AsyncAPI demo for kafka
 _*Note:* Unless domain api service is running on port 9000, above requests will fail. Move to next section for solution!_
 
 ### Start BFF Server with Domain API Stub
 This will start the nodejs based BFF server with domain api stubbed to demonstrate workings of stub server
 ```shell
-DEBUG=specmatic-order-backend-nodejs:* npm startWithStub
+DEBUG=specmatic-order-backend-nodejs:* npm startWithStubs
 ```
 Access find orders api again at http://localhost:8080/findAvailableProducts with result like
 ```json
 [{"id":698,"name":"NUBYR","type":"book","inventory":278}]
 ```
+Simillarly you can access email registrations api which connects to the kafka stub
 
 ### Run Tests
 This will start the specmatic stub server for domain api at port 900 using the information in specmatic.json and run JEST tests to validate BFF apis.
