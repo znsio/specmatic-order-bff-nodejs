@@ -19,6 +19,10 @@ const stopServer = () => {
 console.log('after...');
 
 module.exports = async function () {
+    const value = JSON.stringify({ id: 2, name: 'iPhone', type: 'gadget', inventory: 5 });
+    const verifyResult = await specmatic.verifyKafkaStub(global.specmatic.kafkaStub, 'product-queries', 'test', value);
+    if (!verifyResult) throw Error('Specmatic kafka verification failed');
     specmatic.stopStub(global.specmatic.stub);
+    specmatic.stopKafkaStub(global.specmatic.kafkaStub);
     await stopServer();
 };
