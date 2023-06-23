@@ -1,47 +1,49 @@
-const KAFKA_BROKER_PORT = 10001; //This has to be at the top as require('../../src/app.js) will expect this on require itself
+//The below constants has to be at the top as require('../../src/app.js) will expect this on require itself
+const KAFKA_BROKER_PORT = 10001;
 process.env.KAFKA_BROKER_PORT = KAFKA_BROKER_PORT;
+const APP_HOST = 'localhost';
+const APP_PORT = 8080;
 
 const http = require('http');
-const { setExpectations, stopStub, startStub, startKafkaStub, stopKafkaStub, verifyKafkaStub } = require('specmatic');
-const specmatic = require('specmatic');
 const app = require('../../src/app.js');
+const specmatic = require('specmatic');
 
-var stub, kafkaStub, server;
+var httpStub, kafkaStub, appServer;
 
 beforeAll(async () => {
-    kafkaStub = await startKafkaStub(KAFKA_BROKER_PORT);
-    stub = await startStub();
-    server = await startServer();
-    await setExpectations('test-resources/products.json', stub.url);
+    kafkaStub = await specmatic.startKafkaStub(KAFKA_BROKER_PORT);
+    httpStub = await specmatic.startStub();
+    appServer = await startApp();
+    await specmatic.setExpectations('test-resources/products.json', httpStub.url);
 }, 10000);
 
-test('asdsa', async () => {
-    await specmatic.test('localhost', 8080, 'test-resources/product-search-bff-api.yaml');
+test('Contract test product search', async () => {
+    await specmatic.test(APP_HOST, APP_PORT);
     const value = JSON.stringify({ id: 2, name: 'iPhone', type: 'gadget', inventory: 5 });
-    await expect(verifyKafkaStub(kafkaStub, 'product-queries', 'test', value)).resolves.toBeTruthy();
+    await expect(specmatic.verifyKafkaStub(kafkaStub, 'product-queries', 'test', value)).resolves.toBeTruthy();
 }, 5000);
 
 afterAll(async () => {
-    await stopServer();
-    stopStub(stub);
-    stopKafkaStub(kafkaStub);
+    await stopApp();
+    specmatic.stopStub(httpStub);
+    specmatic.stopKafkaStub(kafkaStub);
 });
 
-function startServer() {
+function startApp() {
     return new Promise((resolve, _reject) => {
-        const server = http.createServer(app);
-        server.listen(8080);
-        server.on('listening', async () => {
-            console.log(`Running BFF server @ http://${server.address().address}:${server.address().port}`);
-            resolve(server);
+        appServer = http.createServer(app);
+        appServer.listen(APP_PORT);
+        appServer.on('listening', async () => {
+            console.log(`Running BFF server @ http://${appServer.address().address}:${appServer.address().port}`);
+            resolve(appServer);
         });
     });
 }
 
-function stopServer() {
+function stopApp() {
     return new Promise((resolve, reject) => {
         console.debug('Stopping BFF server');
-        server.close(err => {
+        appServer.close(err => {
             if (err) {
                 console.error(`Stopping BFF failed with ${err}`);
                 reject();
