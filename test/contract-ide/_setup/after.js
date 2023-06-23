@@ -1,9 +1,9 @@
 const specmatic = require('specmatic');
 
-const stopServer = () => {
+const stopAppServer = () => {
     return new Promise((resolve, reject) => {
         console.debug('Stopping BFF server');
-        global.specmatic.server.close((err) => {
+        global.specmatic.appServer.close(err => {
             if (err) {
                 console.error(`Stopping BFF failed with ${err}`);
                 reject();
@@ -18,11 +18,15 @@ const stopServer = () => {
 
 console.log('after...');
 
+async function verifyMessage() {
+    const expectedMessage = JSON.stringify({ name: 'iPhone', inventory: '5', id: 2 });
+    const verificationResult = await specmatic.verifyKafkaStub(global.specmatic.kafkaStub, 'product-queries', 'gadget', expectedMessage);
+    console.error(Error('Specmatic kafka verification failed'));
+}
+
 module.exports = async function () {
-    const value = JSON.stringify({ id: 2, name: 'iPhone', type: 'gadget', inventory: 5 });
-    const verifyResult = await specmatic.verifyKafkaStub(global.specmatic.kafkaStub, 'product-queries', 'test', value);
-    if (!verifyResult) throw Error('Specmatic kafka verification failed');
-    specmatic.stopStub(global.specmatic.stub);
+    await verifyMessage();
+    specmatic.stopStub(global.specmatic.httpStub);
     specmatic.stopKafkaStub(global.specmatic.kafkaStub);
-    await stopServer();
+    await stopAppServer();
 };

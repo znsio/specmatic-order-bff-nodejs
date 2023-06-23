@@ -4,6 +4,7 @@ const router = express.Router();
 const { Kafka } = require('kafkajs');
 
 const kafkaBrokerPort = process.env.KAFKA_BROKER_PORT || 9092;
+const apiPort = process.env.API_PORT || 9000;
 
 const kafka = new Kafka({
     clientId: 'my-app',
@@ -12,14 +13,15 @@ const kafka = new Kafka({
 
 router.get('/findAvailableProducts', function (req, res) {
     axios
-        .get('http://localhost:9000/products?type=' + req.query.type)
+        .get(`http://localhost:${apiPort}/products?type=` + req.query.type)
         .then(async apiRes => {
             const producer = kafka.producer();
             await producer.connect();
             for (const i in apiRes.data) {
+                const product = apiRes.data[i];
                 await producer.send({
                     topic: 'product-queries',
-                    messages: [{ key: req.query.type, value: JSON.stringify(apiRes.data[i]) }],
+                    messages: [{ key: req.query.type, value: JSON.stringify({name: product.name, inventory: product.inventory, id: product.id}) }],
                 });
             }
             await producer.disconnect();
@@ -31,7 +33,7 @@ router.get('/findAvailableProducts', function (req, res) {
 router.post('/createOrder', function (req, res, next) {
     axios
         .post('http://localhost:9000/orders', req.body)
-        .then(apiRes => {
+        .then(() => {
             res.send({ status: true });
         })
         .catch(err => {
