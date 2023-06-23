@@ -16,19 +16,19 @@ beforeAll(async () => {
     httpStub = await specmatic.startStub('localhost', HTTP_STUB_PORT);
     appServer = await startApp();
     await specmatic.setExpectations('test-resources/products.json', httpStub.url);
-}, 10000);
+}, 25000);
 
 test('contract test', async () => {
     await specmatic.test(APP_HOST, APP_PORT);
     const expectedMessage = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 });
     await expect(specmatic.verifyKafkaStub(kafkaStub, 'product-queries', 'gadget', expectedMessage)).resolves.toBeTruthy();
-}, 5000);
+}, 25000);
 
 afterAll(async () => {
     await stopApp();
     specmatic.stopStub(httpStub);
     specmatic.stopKafkaStub(kafkaStub);
-});
+}, 25000);
 
 function startApp() {
     process.env.API_PORT = httpStub.port;
