@@ -27,7 +27,7 @@ module.exports = async function () {
     var httpStub, kafkaStub, appServer;
     kafkaStub = await specmatic.startKafkaStub(KAFKA_BROKER_PORT);
     httpStub = await specmatic.startStub('localhost', HTTP_STUB_PORT);
-    await specmatic.setExpectations('test-resources/products.json');
+    await specmatic.setExpectations('test-resources/products.json', httpStub.url);
     appServer = await startAppServer();
     await specmatic.test(APP_HOST, APP_PORT);
     global.specmatic = { appServer, httpStub, kafkaStub };
