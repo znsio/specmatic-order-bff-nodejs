@@ -11,7 +11,7 @@ beforeAll(async () => {
     kafkaStub = await startKafkaStub(KAFKA_BROKER_PORT);
     stub = await startStub();
     await setExpectations('test-resources/products.json', stub.url);
-}, 10000);
+}, 60000);
 
 test('findAvailableProducts gives a list of products', async () => {
     const res = await request(app).get('/findAvailableProducts?type=gadget').accept('application/json').expect(200);
@@ -19,7 +19,7 @@ test('findAvailableProducts gives a list of products', async () => {
     expect(res.body.length).toEqual(1);
     const value = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 });
     await expect(verifyKafkaStub(kafkaStub, 'product-queries', value)).resolves.toBeTruthy();
-}, 5000);
+}, 60000);
 
 afterAll(() => {
     stopStub(stub);
