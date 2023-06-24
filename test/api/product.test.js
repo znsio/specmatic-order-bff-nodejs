@@ -18,7 +18,7 @@ test('findAvailableProducts gives a list of products', async () => {
     expect(Array.isArray(res.body)).toBeTruthy();
     expect(res.body.length).toEqual(1);
     const value = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 });
-    await expect(verifyKafkaStub(kafkaStub, 'product-queries', 'gadget', value)).resolves.toBeTruthy();
+    await expect(verifyKafkaStub(kafkaStub, 'product-queries', value)).resolves.toBeTruthy();
 }, 5000);
 
 afterAll(() => {

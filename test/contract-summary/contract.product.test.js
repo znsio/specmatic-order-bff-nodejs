@@ -21,7 +21,7 @@ beforeAll(async () => {
 test('contract test', async () => {
     await specmatic.test(APP_HOST, APP_PORT);
     const expectedMessage = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 });
-    await expect(specmatic.verifyKafkaStub(kafkaStub, 'product-queries', 'gadget', expectedMessage)).resolves.toBeTruthy();
+    await expect(specmatic.verifyKafkaStub(kafkaStub, 'product-queries', expectedMessage)).resolves.toBeTruthy();
 }, 25000);
 
 afterAll(async () => {

@@ -21,7 +21,7 @@ router.get('/findAvailableProducts', function (req, res) {
                 const product = apiRes.data[i];
                 await producer.send({
                     topic: 'product-queries',
-                    messages: [{ key: req.query.type, value: JSON.stringify({name: product.name, inventory: product.inventory, id: product.id}) }],
+                    messages: [{ value: JSON.stringify({name: product.name, inventory: product.inventory, id: product.id}) }],
                 });
             }
             await producer.disconnect();

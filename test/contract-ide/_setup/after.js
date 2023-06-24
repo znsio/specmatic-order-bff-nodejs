@@ -20,7 +20,7 @@ console.log('after...');
 
 async function verifyMessage() {
     const expectedMessage = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 });
-    const verificationResult = await specmatic.verifyKafkaStub(global.specmatic.kafkaStub, 'product-queries', 'gadget', expectedMessage);
+    const verificationResult = await specmatic.verifyKafkaStub(global.specmatic.kafkaStub, 'product-queries', expectedMessage);
     if (!verificationResult) console.error(Error('Specmatic kafka verification failed'));
     return verificationResult;
 }
