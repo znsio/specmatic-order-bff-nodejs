@@ -14,11 +14,11 @@ beforeAll(async () => {
 }, 10000);
 
 test('findAvailableProducts gives a list of products', async () => {
-    const res = await request(app).get('/findAvailableProducts?type=test').accept('application/json').expect(200);
+    const res = await request(app).get('/findAvailableProducts?type=gadget').accept('application/json').expect(200);
     expect(Array.isArray(res.body)).toBeTruthy();
     expect(res.body.length).toEqual(1);
-    const value = JSON.stringify({ id: 2, name: 'iPhone', type: 'gadget', inventory: 5 });
-    await expect(verifyKafkaStub(kafkaStub, 'product-queries', 'test', value)).resolves.toBeTruthy();
+    const value = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 });
+    await expect(verifyKafkaStub(kafkaStub, 'product-queries', 'gadget', value)).resolves.toBeTruthy();
 }, 5000);
 
 afterAll(() => {
