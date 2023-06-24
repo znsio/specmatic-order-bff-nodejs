@@ -24,4 +24,4 @@ test('findAvailableProducts gives a list of products', async () => {
 afterAll(() => {
     stopStub(stub);
     stopKafkaStub(kafkaStub);
-});
+}, 60000);
