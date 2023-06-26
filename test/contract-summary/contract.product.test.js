@@ -26,8 +26,8 @@ test('contract test', async () => {
 
 afterAll(async () => {
     await stopApp();
-    specmatic.stopStub(httpStub);
-    specmatic.stopKafkaStub(kafkaStub);
+    await specmatic.stopStub(httpStub);
+    await specmatic.stopKafkaStub(kafkaStub);
 }, 25000);
 
 function startApp() {

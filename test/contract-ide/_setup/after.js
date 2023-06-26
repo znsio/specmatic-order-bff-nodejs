@@ -27,7 +27,7 @@ async function verifyMessage() {
 
 module.exports = async function () {
     const verificationResult = await verifyMessage();
-    specmatic.stopStub(global.specmatic.httpStub);
-    specmatic.stopKafkaStub(global.specmatic.kafkaStub);
+    await specmatic.stopStub(global.specmatic.httpStub);
+    await specmatic.stopKafkaStub(global.specmatic.kafkaStub);
     await stopAppServer(verificationResult ? 0 : 1);
 };

@@ -21,7 +21,7 @@ test('findAvailableProducts gives a list of products', async () => {
     await expect(verifyKafkaStub(kafkaStub, 'product-queries', value)).resolves.toBeTruthy();
 }, 60000);
 
-afterAll(() => {
-    stopStub(stub);
-    stopKafkaStub(kafkaStub);
+afterAll(async () => {
+    await stopStub(stub);
+    await stopKafkaStub(kafkaStub);
 }, 60000);
