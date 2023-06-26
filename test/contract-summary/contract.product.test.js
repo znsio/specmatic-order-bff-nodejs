@@ -15,13 +15,15 @@ beforeAll(async () => {
     kafkaStub = await specmatic.startKafkaStub(KAFKA_BROKER_PORT);
     httpStub = await specmatic.startStub('localhost', HTTP_STUB_PORT);
     appServer = await startApp();
-    await specmatic.setExpectations('test-resources/products.json', httpStub.url);
 }, 25000);
 
 test('contract test', async () => {
+    await specmatic.setExpectations('test-resources/products.json', httpStub.url);
+    await specmatic.setKafkaStubExpectations(kafkaStub, [{ topic: 'product-queries', count: 1 }]);
     await specmatic.test(APP_HOST, APP_PORT);
-    const expectedMessage = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 });
-    await expect(specmatic.verifyKafkaStub(kafkaStub, 'product-queries', expectedMessage)).resolves.toBeTruthy();
+    await expect(specmatic.verifyKafkaStub(kafkaStub)).resolves.toBeTruthy();
+    // const expectedMessage = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 });
+    // await expect(specmatic.verifyKafkaStubMessage(kafkaStub, 'product-queries', expectedMessage)).resolves.toBeTruthy();
 }, 25000);
 
 afterAll(async () => {

@@ -1,7 +1,7 @@
 const KAFKA_BROKER_PORT = 10001; //This has to be at the top as require('../../src/app.js) will expect this on require itself
 process.env.KAFKA_BROKER_PORT = KAFKA_BROKER_PORT;
 
-const { setExpectations, stopStub, startStub, startKafkaStub, stopKafkaStub, verifyKafkaStub } = require('specmatic');
+const { setExpectations, stopStub, startStub, startKafkaStub, stopKafkaStub, verifyKafkaStub, verifyKafkaStubMessage } = require('specmatic');
 const request = require('supertest');
 const app = require('../../src/app.js');
 
@@ -18,7 +18,7 @@ test('findAvailableProducts gives a list of products', async () => {
     expect(Array.isArray(res.body)).toBeTruthy();
     expect(res.body.length).toEqual(1);
     const value = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 });
-    await expect(verifyKafkaStub(kafkaStub, 'product-queries', value)).resolves.toBeTruthy();
+    await expect(verifyKafkaStubMessage(kafkaStub, 'product-queries', value)).resolves.toBeTruthy();
 }, 60000);
 
 afterAll(async () => {

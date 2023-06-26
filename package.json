@@ -22,8 +22,8 @@
   "devDependencies": {
     "jest": "^29.5.0",
     "node-fetch": "^2.6.11",
-    "specmatic": "^0.70.6",
-    "specmatic-beta": "github:znsio/specmatic-node-beta#0.2.1",
+    "specmatic": "^0.70.7",
+    "specmatic-beta": "github:znsio/specmatic-node-beta#0.3.0",
     "supertest": "^6.3.3"
   }
 }

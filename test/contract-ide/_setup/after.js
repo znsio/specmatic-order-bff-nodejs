@@ -25,8 +25,15 @@ async function verifyMessage() {
     return verificationResult;
 }
 
+async function verifyKafkaStub() {
+    const verificationResult = await specmatic.verifyKafkaStub(global.specmatic.kafkaStub);
+    if (!verificationResult) console.error(Error('Specmatic kafka verification failed'));
+    return verificationResult;
+}
+
 module.exports = async function () {
-    const verificationResult = await verifyMessage();
+    // const verificationResult = await verifyMessage();
+    const verificationResult = await verifyKafkaStub();
     await specmatic.stopStub(global.specmatic.httpStub);
     await specmatic.stopKafkaStub(global.specmatic.kafkaStub);
     await stopAppServer(verificationResult ? 0 : 1);
