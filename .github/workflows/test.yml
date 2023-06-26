@@ -10,7 +10,8 @@ jobs:
         strategy:
           matrix:
             node-version: [14.x, 16.x, 18.x, 20.x]
-        runs-on: ubuntu-latest
+            os: [ubuntu-latest, windows-latest, macos-latest]
+        runs-on: ${{ matrix.os }}
         steps:
           # Node 18 does resolves localhost to ipv6 address by default but refuses any connection to it
           # Fix this by changing DNS entries in /etc/hosts file to resolve localhost to ipv4 address
