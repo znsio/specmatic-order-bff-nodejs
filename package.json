@@ -23,7 +23,7 @@
     "jest": "^29.5.0",
     "node-fetch": "^2.6.11",
     "specmatic": "^0.70.8",
-    "specmatic-beta": "github:znsio/specmatic-node-beta#0.3.0",
+    "specmatic-beta": "github:znsio/specmatic-node-beta#0.4.0",
     "supertest": "^6.3.3"
   }
 }
