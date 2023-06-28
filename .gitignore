@@ -4,3 +4,4 @@ dist
 .specmatic
 .vscode
 kafka-logs
+coverage

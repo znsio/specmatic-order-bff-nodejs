@@ -1,5 +1,6 @@
 {
     "roots": ["<rootDir>"],
     "globalSetup": "./_setup/before.js",
-    "globalTeardown": "./_setup/after.js"
+    "globalTeardown": "./_setup/after.js",
+    "testMatch": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)", "**/?(*.)+(spec|test).mjs"]
 }

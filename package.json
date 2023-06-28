@@ -6,8 +6,8 @@
     "start": "node ./src/bin/www",
     "startWithStubs": "npm run startBFFStub && npm start",
     "startBFFStub": "specmatic stub resources/api_order_v1.yaml --data resources/data --port 9000",
-    "test": "jest",
-    "test-ci": "jest api && jest contract-ide && jest contract-summary && jest unit --detectOpenHandles"
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest --collectCoverage",
+    "test-ci": "jest api && node --experimental-vm-modules ./node_modules/.bin/jest contract-ide && jest contract-summary && jest unit"
   },
   "dependencies": {
     "axios": "^1.4.0",
