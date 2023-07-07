@@ -9,9 +9,15 @@ process.env.API_PORT = HTTP_STUB_PORT;
 console.log('before...');
 
 module.exports = async function () {
-    var httpStub, kafkaStub, appServer;
-    kafkaStub = await specmatic.startKafkaStub(KAFKA_BROKER_PORT);
-    httpStub = await specmatic.startStub('localhost', HTTP_STUB_PORT);
-    await specmatic.setExpectations('test-resources/products.json', httpStub.url);
-    global.specmatic = { appServer, httpStub, kafkaStub };
+    var httpStub, kafkaStub;
+    try {
+        kafkaStub = await specmatic.startKafkaStub(KAFKA_BROKER_PORT);
+        httpStub = await specmatic.startStub('localhost', HTTP_STUB_PORT);
+        await specmatic.setExpectations('test-resources/products.json', httpStub.url);
+    } catch(e) {
+        await specmatic.stopKafkaStub(kafkaStub);
+        await specmatic.stopStub(httpStub);
+        process.exit(1);
+    }
+    global.specmatic = { httpStub, kafkaStub };
 };
