@@ -14,7 +14,8 @@
     "debug": "~4.3.4",
     "express": "~4.18.2",
     "kafkajs": "^2.2.4",
-    "morgan": "~1.10.0"
+    "morgan": "~1.10.0",
+    "specmatic-util": "github:znsio/specmatic-node-util#0.2.0"
   },
   "specmatic": {
     "logLevel": "info"
@@ -22,7 +23,7 @@
   "devDependencies": {
     "jest": "^29.6.1",
     "node-fetch": "^2.6.11",
-    "specmatic": "^0.72.5",
+    "specmatic": "^0.72.6",
     "specmatic-beta": "github:znsio/specmatic-node-beta#0.5.0",
     "supertest": "^6.3.3"
   }

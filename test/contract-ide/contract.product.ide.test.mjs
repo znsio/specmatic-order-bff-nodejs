@@ -17,7 +17,6 @@ if (!kafkaVerification) {
 function startAppServer() {
     return new Promise((resolve, _reject) => {
         import('../../src/app.js').then(app => {
-            specmatic.enableApiCoverage(app.default);
             const server = http.createServer(app.default);
             server.listen(APP_PORT);
             server.on('listening', async () => {
