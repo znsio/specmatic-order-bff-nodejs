@@ -14,7 +14,8 @@ module.exports = async function () {
         kafkaStub = await specmatic.startKafkaStub(KAFKA_BROKER_PORT);
         httpStub = await specmatic.startStub('localhost', HTTP_STUB_PORT);
         await specmatic.setExpectations('test-resources/products.json', httpStub.url);
-    } catch(e) {
+        await specmatic.setKafkaStubExpectations(kafkaStub, [{ topic: 'product-queries', count: 1 }]);
+    } catch (e) {
         await specmatic.stopKafkaStub(kafkaStub);
         await specmatic.stopStub(httpStub);
         process.exit(1);

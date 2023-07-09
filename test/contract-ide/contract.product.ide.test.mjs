@@ -8,8 +8,11 @@ const appServer = await startAppServer();
 await specmatic.test(APP_HOST, APP_PORT);
 specmatic.showTestResults(test);
 // const verificationResult = await verifyMessage();
-const verificationResult = await verifyKafkaStub();
-await stopAppServer(verificationResult ? 0 : 1);
+const kafkaVerification = await verifyKafkaStub();
+await stopAppServer();
+if (!kafkaVerification) {
+    throw new Error('Kafka verification failed');
+}
 
 function startAppServer() {
     return new Promise((resolve, _reject) => {
@@ -25,7 +28,7 @@ function startAppServer() {
     });
 }
 
-function stopAppServer(exitCode) {
+function stopAppServer() {
     return new Promise((resolve, reject) => {
         console.debug('Stopping BFF server');
         appServer.close(err => {
