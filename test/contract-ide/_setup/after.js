@@ -1,8 +1,8 @@
-const specmatic = require('specmatic');
+const specmatic = require('specmatic')
 
-console.log('after...');
+console.log('after...')
 
 module.exports = async function () {
-    await specmatic.stopStub(global.specmatic.httpStub);
-    await specmatic.stopKafkaStub(global.specmatic.kafkaStub);
-};
+    await specmatic.stopStub(global.specmatic.httpStub)
+    await specmatic.stopKafkaStub(global.specmatic.kafkaStub)
+}

@@ -1,28 +1,28 @@
-const KAFKA_BROKER_PORT = 10001; //This has to be at the top as require('../../src/app.js) will expect this on require itself
-process.env.KAFKA_BROKER_URL = `localhost:${KAFKA_BROKER_PORT}`;
+const KAFKA_BROKER_PORT = 10001 //This has to be at the top as require('../../src/app.js) will expect this on require itself
+process.env.KAFKA_BROKER_URL = `localhost:${KAFKA_BROKER_PORT}`
 process.env.KAFKAJS_NO_PARTITIONER_WARNING=1
 
-const { setExpectations, stopStub, startStub, startKafkaStub, stopKafkaStub, verifyKafkaStubMessage } = require('specmatic');
-const request = require('supertest');
-const app = require('../../src/app.js');
+const { setExpectations, stopStub, startStub, startKafkaStub, stopKafkaStub, verifyKafkaStubMessage } = require('specmatic')
+const request = require('supertest')
+const app = require('../../src/app.js')
 
-let stub, kafkaStub;
+let stub, kafkaStub
 
 beforeAll(async () => {
-    kafkaStub = await startKafkaStub(KAFKA_BROKER_PORT);
-    stub = await startStub();
-    await setExpectations('test-resources/products.json', stub.url);
-}, 60000);
+    kafkaStub = await startKafkaStub(KAFKA_BROKER_PORT)
+    stub = await startStub()
+    await setExpectations('test-resources/products.json', stub.url)
+}, 60000)
 
 test('findAvailableProducts gives a list of products', async () => {
-    const res = await request(app).get('/findAvailableProducts?type=gadget').accept('application/json').expect(200);
-    expect(Array.isArray(res.body)).toBeTruthy();
-    expect(res.body.length).toEqual(1);
-    const value = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 });
-    await expect(verifyKafkaStubMessage(kafkaStub, 'product-queries', value)).resolves.toBeTruthy();
-}, 60000);
+    const res = await request(app).get('/findAvailableProducts?type=gadget').accept('application/json').expect(200)
+    expect(Array.isArray(res.body)).toBeTruthy()
+    expect(res.body.length).toEqual(1)
+    const value = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 })
+    await expect(verifyKafkaStubMessage(kafkaStub, 'product-queries', value)).resolves.toBeTruthy()
+}, 60000)
 
 afterAll(async () => {
-    await stopStub(stub);
-    await stopKafkaStub(kafkaStub);
-}, 60000);
+    await stopStub(stub)
+    await stopKafkaStub(kafkaStub)
+}, 60000)
