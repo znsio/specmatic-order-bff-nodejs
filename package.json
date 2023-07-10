@@ -18,13 +18,13 @@
     "specmatic-util": "github:znsio/specmatic-node-util#0.2.0"
   },
   "specmatic": {
-    "logLevel": "info"
+    "logLevel": "debug"
   },
   "devDependencies": {
     "jest": "^29.6.1",
     "node-fetch": "^3.3.1",
     "specmatic": "^0.72.6",
-    "specmatic-beta": "github:znsio/specmatic-node-beta#0.5.0",
+    "specmatic-beta": "github:znsio/specmatic-node-beta#0.6.0",
     "supertest": "^6.3.3"
   }
 }

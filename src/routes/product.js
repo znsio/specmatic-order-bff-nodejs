@@ -25,6 +25,7 @@ router.get('/findAvailableProducts', function (req, res) {
                 })
             }
             await producer.disconnect()
+            await new Promise(r => setTimeout(r, 2000));
             res.send(apiRes.data)
         })
         .catch(err => console.log('Error: ', err.message))
