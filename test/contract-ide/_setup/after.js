@@ -1,6 +1,6 @@
 const specmatic = require('specmatic')
 
-console.log('after...')
+console.log('about to start test tear down...')
 
 module.exports = async function () {
     await specmatic.stopStub(global.specmatic.httpStub)

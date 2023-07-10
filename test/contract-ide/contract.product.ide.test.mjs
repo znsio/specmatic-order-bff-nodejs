@@ -7,11 +7,8 @@ const APP_PORT = 8081
 const appServer = await startAppServer()
 await specmatic.test(APP_HOST, APP_PORT)
 specmatic.showTestResults(test)
-const kafkaVerification = await verifyKafkaStub()
 await stopAppServer()
-if (!kafkaVerification) {
-    throw new Error('Kafka verification failed')
-}
+await verifyKafkaStub()
 
 function startAppServer() {
     return new Promise((resolve, _reject) => {
@@ -43,6 +40,7 @@ function stopAppServer() {
 
 async function verifyKafkaStub() {
     const verificationResult = await specmatic.verifyKafkaStub(global.specmatic.kafkaStub)
-    if (!verificationResult) console.error(Error('Specmatic kafka verification failed'))
-    return verificationResult
+    if (!verificationResult) {
+        throw new Error('Specmatic kafka verification failed')
+    }
 }

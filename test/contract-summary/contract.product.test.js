@@ -33,7 +33,6 @@ afterAll(async () => {
 }, 25000)
 
 function startApp() {
-    process.env.API_PORT = httpStub.port
     const app = require('../../src/app.js')
     return new Promise((resolve, _reject) => {
         appServer = http.createServer(app)

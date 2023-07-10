@@ -8,7 +8,7 @@ process.env.KAFKAJS_NO_PARTITIONER_WARNING=1
 process.env.KAFKA_BROKER_URL = `localhost:${KAFKA_BROKER_PORT}`
 process.env.API_BASE_URL = `http://${HTTP_STUB_HOST}:${HTTP_STUB_PORT}`
 
-console.log('before...')
+console.log('about to start test set up...')
 
 module.exports = async function () {
     let httpStub, kafkaStub
