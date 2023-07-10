@@ -51,3 +51,9 @@ This will start the specmatic stub server for domain API at port 9000 using the 
 ```shell
 DEBUG=specmatic-order-backend-nodejs:* npm run test-ci
 ```
+
+### Run Tests with coverage
+Use the following command
+```shell
+DEBUG=specmatic-order-backend-nodejs:* npm test contract-ide
+```
