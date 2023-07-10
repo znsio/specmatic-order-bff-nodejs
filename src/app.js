@@ -1,11 +1,10 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var specmaticUtil = require('specmatic-util');
+const express = require('express');
+const logger = require('morgan');
+const specmaticUtil = require('specmatic-util');
 
-var productsRouter = require('./routes/product');
+const productsRouter = require('./routes/product');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());

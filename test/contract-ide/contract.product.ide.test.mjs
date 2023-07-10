@@ -42,13 +42,6 @@ function stopAppServer() {
     });
 }
 
-async function verifyMessage() {
-    const expectedMessage = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 });
-    const verificationResult = await specmatic.verifyKafkaStubMessage(global.specmatic.kafkaStub, 'product-queries', expectedMessage);
-    if (!verificationResult) console.error(Error('Specmatic kafka message verification failed'));
-    return verificationResult;
-}
-
 async function verifyKafkaStub() {
     const verificationResult = await specmatic.verifyKafkaStub(global.specmatic.kafkaStub);
     if (!verificationResult) console.error(Error('Specmatic kafka verification failed'));

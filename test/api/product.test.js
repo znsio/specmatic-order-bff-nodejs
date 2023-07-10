@@ -1,11 +1,12 @@
 const KAFKA_BROKER_PORT = 10001; //This has to be at the top as require('../../src/app.js) will expect this on require itself
-process.env.KAFKA_BROKER_PORT = KAFKA_BROKER_PORT;
+process.env.KAFKA_BROKER_URL = `localhost:${KAFKA_BROKER_PORT}`;
+process.env.KAFKAJS_NO_PARTITIONER_WARNING=1
 
-const { setExpectations, stopStub, startStub, startKafkaStub, stopKafkaStub, verifyKafkaStub, verifyKafkaStubMessage } = require('specmatic');
+const { setExpectations, stopStub, startStub, startKafkaStub, stopKafkaStub, verifyKafkaStubMessage } = require('specmatic');
 const request = require('supertest');
 const app = require('../../src/app.js');
 
-var stub, kafkaStub;
+let stub, kafkaStub;
 
 beforeAll(async () => {
     kafkaStub = await startKafkaStub(KAFKA_BROKER_PORT);
