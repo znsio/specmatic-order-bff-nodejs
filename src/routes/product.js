@@ -4,7 +4,7 @@ const router = express.Router()
 const { Kafka } = require('kafkajs')
 
 const kafkaBrokerURL = process.env.KAFKA_BROKER_URL || "localhost:9092"
-const apiBaseURL = process.env.API_BASE_URL || "http://localhost:9000"
+const domainAPIBaseURL = process.env.API_BASE_URL || "http://localhost:9000"
 
 const kafka = new Kafka({
     clientId: 'my-app',
@@ -13,7 +13,7 @@ const kafka = new Kafka({
 
 router.get('/findAvailableProducts', function (req, res) {
     axios
-        .get(`${apiBaseURL}/products?type=` + req.query.type)
+        .get(`${domainAPIBaseURL}/products?type=` + req.query.type)
         .then(async apiRes => {
             const producer = kafka.producer()
             await producer.connect()
@@ -21,7 +21,7 @@ router.get('/findAvailableProducts', function (req, res) {
                 const product = apiRes.data[i]
                 await producer.send({
                     topic: 'product-queries',
-                    messages: [{ value: JSON.stringify({name: product.name, inventory: product.inventory, id: product.id}) }],
+                    messages: [{ value: JSON.stringify({id: product.id, name: product.name, inventory: product.inventory}) }],
                 })
             }
             await producer.disconnect()

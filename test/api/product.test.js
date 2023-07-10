@@ -14,12 +14,19 @@ beforeAll(async () => {
     await setExpectations('test-resources/products.json', stub.url)
 }, 60000)
 
+function readJsonFile(stubDataFile) {
+    const fs = require('fs')
+    const data = fs.readFileSync(stubDataFile, 'utf8')
+    return JSON.parse(data)
+}
+
 test('findAvailableProducts gives a list of products', async () => {
     const res = await request(app).get('/findAvailableProducts?type=gadget').accept('application/json').expect(200)
-    expect(Array.isArray(res.body)).toBeTruthy()
-    expect(res.body.length).toEqual(1)
-    const value = JSON.stringify({ name: 'iPhone', inventory: 5, id: 2 })
-    await expect(verifyKafkaStubMessage(kafkaStub, 'product-queries', value)).resolves.toBeTruthy()
+    const fileContent = readJsonFile('test-resources/products.json')
+    let stubBody = fileContent['http-response'].body
+    expect(res.body).toStrictEqual(stubBody)
+    const{ type, ...message } = stubBody[0]
+    await expect(verifyKafkaStubMessage(kafkaStub, 'product-queries', JSON.stringify(message))).resolves.toBeTruthy()
 }, 60000)
 
 afterAll(async () => {
