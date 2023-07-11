@@ -6,8 +6,7 @@
     "start": "node ./src/bin/www",
     "startWithStubs": "npm run startBFFStub && npm start",
     "startBFFStub": "specmatic stub resources/api_order_v1.yaml --data resources/data --port 9000",
-    "test": "node --experimental-vm-modules ./node_modules/.bin/jest --collectCoverage",
-    "test-ci": "jest api && node --experimental-vm-modules ./node_modules/jest/bin/jest.js contract-ide && jest contract-summary && jest unit"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 node --experimental-vm-modules ./node_modules/.bin/jest --collectCoverage --detectOpenHandles"
   },
   "dependencies": {
     "axios": "^1.4.0",
@@ -18,9 +17,10 @@
     "specmatic-util": "github:znsio/specmatic-node-util#0.2.0"
   },
   "specmatic": {
-    "logLevel": "debug"
+    "logLevel": "error"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "jest": "^29.6.1",
     "node-fetch": "^3.3.1",
     "specmatic": "^0.72.6",
