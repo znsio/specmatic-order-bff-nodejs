@@ -2,7 +2,7 @@ const http = require('http')
 
 function startAppServer(port) {
     return new Promise((resolve, _reject) => {
-        const app = require('../../src/app.js')
+        const app = require('../../../src/app.js')
         const server = http.createServer(app)
         server.listen(port)
         server.on('listening', async () => {

@@ -1,5 +1,5 @@
 import specmatic from 'specmatic'
-import { startAppServer, stopAppServer } from './app.server.util.js'
+import { startAppServer, stopAppServer } from './util/app.server.js'
 
 const APP_HOST = 'localhost'
 const APP_PORT = 8081
