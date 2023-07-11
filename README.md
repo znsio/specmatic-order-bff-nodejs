@@ -16,9 +16,7 @@ Here is the [contract/OpenAPI spec](https://github.com/znsio/specmatic-order-con
 ## Background
 A typical web application might look like this. We can use Specmatic to practice contract driven development and also test all the three components below. In this sample project, we look how to do this for nodejs BFF which is dependent on Domain API.
 
-![HTML client talks to client API which talks to backend API](specmatic-sample-architecture.svg)
- 
-_The architecture diagram was created using the amazing free online SVG editor at [Vectr](https://vectr.com)._
+![Specmatic HTTP and Kafka Stubbing for BFF Layer](assets/specmatic-kafka-stub.gif)
 
 ### Tech
 1. NodeJS + Express
