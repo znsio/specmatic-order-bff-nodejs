@@ -14,15 +14,9 @@ beforeAll(async () => {
     await setExpectations('test-resources/products.json', stub.url)
 }, 60000)
 
-function readJsonFile(stubDataFile) {
-    const fs = require('fs')
-    const data = fs.readFileSync(stubDataFile, 'utf8')
-    return JSON.parse(data)
-}
-
 test('findAvailableProducts gives a list of products', async () => {
     const res = await request(app).get('/findAvailableProducts?type=gadget').accept('application/json').expect(200)
-    const fileContent = readJsonFile('test-resources/products.json')
+    const fileContent = require(process.cwd() + '/test-resources/products.json')
     let stubBody = fileContent['http-response'].body
     expect(res.body).toStrictEqual(stubBody)
     const{ type, ...message } = stubBody[0]
