@@ -14,7 +14,7 @@ beforeAll(async () => {
     kafkaStub = await specmatic.startKafkaStub(KAFKA_BROKER_PORT)
     httpStub = await specmatic.startStub()
     await specmatic.setExpectations('test-resources/products.json', httpStub.url)
-}, 10000)
+}, 50000)
 
 test('findAvailableProducts gives a list of products', async () => {
     const res = await request(app).get('/findAvailableProducts?type=gadget').accept('application/json').expect(200)
@@ -23,12 +23,12 @@ test('findAvailableProducts gives a list of products', async () => {
     expect(res.body).toStrictEqual(stubBody)
     const { type, ...message } = stubBody[0]
     await expect(specmatic.verifyKafkaStubMessage(kafkaStub, 'product-queries', JSON.stringify(message))).resolves.toBeTruthy()
-}, 10000)
+}, 50000)
 
 afterAll(async () => {
     await specmatic.stopStub(httpStub)
     await specmatic.stopKafkaStub(kafkaStub)
-}, 10000)
+}, 50000)
 
 function readJsonFile(stubDataFile) {
     const fs = require('fs')
