@@ -6,7 +6,7 @@
     "start": "node ./src/bin/www",
     "startWithDeps": "npm run startBFFDeps && npm start",
     "startBFFDeps": "specmatic stub --port 9000",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 node --experimental-vm-modules ./node_modules/.bin/jest --collectCoverage --detectOpenHandles"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 node --experimental-vm-modules ./node_modules/jest/bin/jest.js --collectCoverage --detectOpenHandles"
   },
   "dependencies": {
     "axios": "^1.4.0",
