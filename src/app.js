@@ -1,12 +1,10 @@
 const express = require('express')
-const logger = require('morgan')
 const specmaticUtil = require('specmatic-util')
 
 const productsRouter = require('./routes/product')
 
 const app = express()
 
-app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
