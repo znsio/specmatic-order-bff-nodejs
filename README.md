@@ -20,7 +20,7 @@ A typical web application might look like this. We can use Specmatic to practice
 
 ![HTML client talks to client API which talks to backend API and Kafka](assets/specmatic-kafka-mocking-architecture.gif)
 
-### Tech
+## Tech
 1. NodeJS + Express
 2. Specmatic
 3. Specmatic Beta extension (for mocking Kafka)
@@ -49,3 +49,23 @@ This will start the Specmatic HTTP stub server for domain API and Specmatic Kafk
 ```shell
 DEBUG=specmatic-order-backend-nodejs:* npm run test-ci
 ```
+
+## Troubleshooting
+1. Specmatic contract tests don't show up in VSCode Test Explorer
+   
+   Specmatic is tested with projects using Jest framework. If you are using any other framework then let us know and we will revert with a solution. In case of jest, if contract tests don't show up, then try restarting the jest runners
+   ![VS Code - Jest Commands](assets/vscode-jest-commands.png)
+
+2. Specmatic contract tests don't run in Jetbrain's PhpStorm
+
+    Jetbrain's PhpStorm does not read `test` script in package.json to determine the command to run tests. It instead uses its own interface to configure all the options. You can configure the same options in the test script in package.json, in PhpStorm's test run configuration as below
+    - `test` script in package.json
+    ```json
+    {
+        ...
+        "test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 node --experimental-vm-modules ./node_modules/.bin/jest --collectCoverage --detectOpenHandles"
+        ...
+    }
+    ```
+    - Above configured in PhpStorm
+    ![PhpStorm Run Configuration](assets/phpstorm-run-configuration.jpg) <br>

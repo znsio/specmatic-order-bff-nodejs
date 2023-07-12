@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./src/bin/www",
-    "startWithStubs": "npm run startBFFStub && npm start",
-    "startBFFStub": "specmatic stub resources/api_order_v1.yaml --data resources/data --port 9000",
+    "startWithDeps": "npm run startBFFDeps && npm start",
+    "startBFFDeps": "specmatic stub --port 9000",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 node --experimental-vm-modules ./node_modules/.bin/jest --collectCoverage --detectOpenHandles"
   },
   "dependencies": {

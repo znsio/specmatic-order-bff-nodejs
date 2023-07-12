@@ -6,3 +6,4 @@ dist
 kafka-logs
 coverage
 .idea
+.DS_Store
