@@ -8,12 +8,13 @@ const specmatic = require('specmatic')
 const request = require('supertest')
 const app = require('../../src/app.js')
 
-let httpStub, kafkaStub
+let httpStub, kafkaMock
 
 beforeAll(async () => {
-    kafkaStub = await specmatic.startKafkaStub(KAFKA_BROKER_PORT)
-    httpStub = await specmatic.startStub()
-    await specmatic.setExpectations('test-resources/products.json', httpStub.url)
+    kafkaMock = await specmatic.startKafkaMock(KAFKA_BROKER_PORT)
+    httpStub = await specmatic.startHttpStub()
+    await specmatic.setHttpStubExpectations('test-resources/products.json', httpStub.url)
+    await specmatic.setKafkaMockExpectations(kafkaMock, [{ topic: 'product-queries', count: 1 }])
 }, 50000)
 
 test('findAvailableProducts gives a list of products', async () => {
@@ -22,12 +23,13 @@ test('findAvailableProducts gives a list of products', async () => {
     let stubBody = fileContent['http-response'].body
     expect(res.body).toStrictEqual(stubBody)
     const { type, ...message } = stubBody[0]
-    await expect(specmatic.verifyKafkaStubMessage(kafkaStub, 'product-queries', JSON.stringify(message))).resolves.toBeTruthy()
+    await expect(specmatic.verifyKafkaStubMessage(kafkaMock, 'product-queries', JSON.stringify(message))).resolves.toBeTruthy()
+    await expect(specmatic.verifyKafkaStub(kafkaMock)).resolves.toBeTruthy()
 }, 50000)
 
 afterAll(async () => {
     await specmatic.stopStub(httpStub)
-    await specmatic.stopKafkaStub(kafkaStub)
+    await specmatic.stopKafkaStub(kafkaMock)
 }, 50000)
 
 function readJsonFile(stubDataFile) {
