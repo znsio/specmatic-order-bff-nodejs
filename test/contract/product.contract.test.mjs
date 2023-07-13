@@ -12,21 +12,21 @@ process.env.KAFKAJS_NO_PARTITIONER_WARNING = 1
 process.env.KAFKA_BROKER_URL = `localhost:${KAFKA_BROKER_PORT}`
 process.env.API_BASE_URL = `http://${HTTP_STUB_HOST}:${HTTP_STUB_PORT}`
 
-let httpStub, kafkaStub
+let httpStub, kafkaMock
 
-kafkaStub = await specmatic.startKafkaStub(KAFKA_BROKER_PORT)
-httpStub = await specmatic.startStub(HTTP_STUB_HOST, HTTP_STUB_PORT)
+kafkaMock = await specmatic.startKafkaMock(KAFKA_BROKER_PORT)
+httpStub = await specmatic.startHttpStub(HTTP_STUB_HOST, HTTP_STUB_PORT)
 const appServer = await startAppServer(APP_PORT)
 
-await specmatic.setExpectations('test-resources/products.json', httpStub.url)
-await specmatic.setKafkaStubExpectations(kafkaStub, [{ topic: 'product-queries', count: 1 }])
+await specmatic.setHttpStubExpectations('test-resources/products.json', httpStub.url)
+await specmatic.setKafkaMockExpectations(kafkaMock, [{ topic: 'product-queries', count: 1 }])
 await specmatic.test(APP_HOST, APP_PORT)
 specmatic.showTestResults(test)
-const verificationResult = await specmatic.verifyKafkaStub(kafkaStub)
+const verificationResult = await specmatic.verifyKafkaMock(kafkaMock)
 
 await stopAppServer(appServer)
-await specmatic.stopStub(httpStub)
-await specmatic.stopKafkaStub(kafkaStub)
+await specmatic.stopHttpStub(httpStub)
+await specmatic.stopKafkaMock(kafkaMock)
 
 if (!verificationResult) {
     throw new Error('Specmatic kafka verification failed')
