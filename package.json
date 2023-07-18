@@ -6,7 +6,8 @@
     "start": "node ./src/bin/www",
     "startWithDeps": "npm run startBFFDeps && npm start",
     "startBFFDeps": "specmatic stub --port 9000",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 node --experimental-vm-modules ./node_modules/jest/bin/jest.js --collectCoverage --detectOpenHandles"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 node ./node_modules/jest/bin/jest.js --collectCoverage --detectOpenHandles",
+    "test-ci": "cross-env SPECMATIC_LOG_LEVEL=debug npm run test"
   },
   "dependencies": {
     "axios": "^1.4.0",
@@ -23,7 +24,7 @@
     "cross-env": "^7.0.3",
     "jest": "^29.6.1",
     "node-fetch": "^3.3.1",
-    "specmatic": "^0.72.7",
+    "specmatic": "^0.72.8",
     "specmatic-beta": "github:znsio/specmatic-node-beta#0.6.0",
     "supertest": "^6.3.3"
   }
