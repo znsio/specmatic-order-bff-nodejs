@@ -1,5 +1,5 @@
 import specmatic from 'specmatic'
-import { startAppServer, stopAppServer } from './util/app.server.js'
+import { getApp, startAppServer, stopAppServer } from './util/app.server.js'
 
 const APP_HOST = 'localhost'
 const APP_PORT = 8081
@@ -12,15 +12,15 @@ process.env.KAFKAJS_NO_PARTITIONER_WARNING = 1
 process.env.KAFKA_BROKER_URL = `localhost:${KAFKA_BROKER_PORT}`
 process.env.API_BASE_URL = `http://${HTTP_STUB_HOST}:${HTTP_STUB_PORT}`
 
-let httpStub, kafkaMock
+let httpStub, kafkaMock, appServer
 
 kafkaMock = await specmatic.startKafkaMock(KAFKA_BROKER_PORT)
 httpStub = await specmatic.startHttpStub(HTTP_STUB_HOST, HTTP_STUB_PORT)
-const appServer = await startAppServer(APP_PORT)
+appServer = await startAppServer(APP_PORT)
 
 await specmatic.setHttpStubExpectations('test-resources/products.json', httpStub.url)
 await specmatic.setKafkaMockExpectations(kafkaMock, [{ topic: 'product-queries', count: 1 }])
-await specmatic.test(APP_HOST, APP_PORT)
+await specmatic.testWithApiCoverage(getApp(), APP_HOST, APP_PORT)
 specmatic.showTestResults(test)
 const verificationResult = await specmatic.verifyKafkaMock(kafkaMock)
 

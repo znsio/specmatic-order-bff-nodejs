@@ -1,8 +1,9 @@
 const http = require('http')
+let app
 
 function startAppServer(port) {
     return new Promise((resolve, _reject) => {
-        const app = require('../../../src/app.js')
+        app = require('../../../src/app.js')
         const server = http.createServer(app)
         server.listen(port)
         server.on('listening', async () => {
@@ -27,4 +28,8 @@ function stopAppServer(appServer) {
     })
 }
 
-module.exports = { startAppServer, stopAppServer }
+function getApp() {
+    return app
+}
+
+module.exports = { getApp, startAppServer, stopAppServer }
