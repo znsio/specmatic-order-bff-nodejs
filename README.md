@@ -29,7 +29,7 @@ A typical web application might look like this. We can use Specmatic to practice
 ### Start BFF Application
 This will start the main nodejs application providing backend service for frontend (BFF)
 ```shell
-DEBUG=specmatic-order-backend-nodejs:* npm start
+npm start
 ```
 Access find orders API at http://localhost:8080/findAvailableProducts. This is used to demo HTTP stubbing using OpenAPI and Kafka mocking using AsyncAPI<br>
 _*Note:* Unless domain API service and Kafka mocks are running, the above requests will fail. Move to the next section for the solution!_
@@ -37,7 +37,7 @@ _*Note:* Unless domain API service and Kafka mocks are running, the above reques
 ### Start BFF Server with Dependencies (Domain API Stub and Kafka Mock Servers)
 This will start the nodejs based BFF server with domain API stubbed using Specmatic HTTP stub server and Kafka mocked using Specmatic Kafka mock server to demonstrate workings of the stub server
 ```shell
-DEBUG=specmatic-order-backend-nodejs:* npm run startWithDeps
+npm run startWithDeps
 ```
 Access find orders API again at http://localhost:8080/findAvailableProducts with a result like
 ```json
@@ -47,7 +47,7 @@ Access find orders API again at http://localhost:8080/findAvailableProducts with
 ### Run Tests
 This will start the Specmatic HTTP stub server for domain API and Specmatic Kafka mock server using the information in specmatic.json and run tests to validate BFF APIs.
 ```shell
-DEBUG=specmatic-order-backend-nodejs:* npm run test-ci
+npm run test-ci
 ```
 
 ## Troubleshooting
