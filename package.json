@@ -24,7 +24,7 @@
     "cross-env": "^7.0.3",
     "jest": "^29.6.1",
     "node-fetch": "^3.3.1",
-    "specmatic": "^0.72.10",
+    "specmatic": "^0.72.11",
     "specmatic-beta": "github:znsio/specmatic-node-beta#0.6.0",
     "supertest": "^6.3.3"
   }

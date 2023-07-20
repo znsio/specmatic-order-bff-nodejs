@@ -11,7 +11,7 @@ const kafka = new Kafka({
     brokers: [`${kafkaBrokerURL}`],
 })
 
-router.get('/findAvailableProducts', function (req, res) {
+router.get('/:storeId/findAvailableProducts', function (req, res) {
     axios
         .get(`${domainAPIBaseURL}/products?type=` + req.query.type)
         .then(async apiRes => {

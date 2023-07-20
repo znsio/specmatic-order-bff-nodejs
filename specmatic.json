@@ -8,7 +8,7 @@
         "in/specmatic/examples/store/kafka.yaml"
       ],
       "test": [
-        "in/specmatic/examples/store/product-search-bff-api.yaml"
+        "in/specmatic/examples/store/product_search_bff_api_v2.yaml"
       ]
     }
   ]
