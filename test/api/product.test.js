@@ -20,7 +20,7 @@ beforeAll(async () => {
 }, TEST_TIMEOUT_MS)
 
 test('findAvailableProducts gives a list of products', async () => {
-    const res = await request(app).get('/findAvailableProducts?type=gadget').accept('application/json').expect(200)
+    const res = await request(app).get('/8465/findAvailableProducts?type=gadget').accept('application/json').expect(200)
     const fileContent = readJsonFile('test-resources/products.json')
     let stubBody = fileContent['http-response'].body
     expect(res.body).toStrictEqual(stubBody)
