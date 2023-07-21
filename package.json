@@ -17,7 +17,7 @@
     "kafkajs": "^2.2.4"
   },
   "specmatic": {
-    "logLevel": "debug"
+    "logLevel": "error"
   },
   "devDependencies": {
     "@types/supertest": "^2.0.12",
