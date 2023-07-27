@@ -15,7 +15,6 @@ jobs:
             # due to permissions required etc
             exclude:
               - os: windows-latest
-                node-version: 18.x
         runs-on: ${{ matrix.os }}
         steps:
           # Node 18 does resolves localhost to ipv6 address by default but refuses any connection to it
