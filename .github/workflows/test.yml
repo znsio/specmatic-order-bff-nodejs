@@ -23,7 +23,7 @@ jobs:
           # https://stackoverflow.com/questions/72648487/node-js-16-17-changed-resolution-of-localhost
           - run: ${{ !startsWith(matrix.os, 'ubuntu') }} || sudo sed -i '/localhost/c\127.0.0.1 localhost' /etc/hosts
           - run: ${{ !startsWith(matrix.os, 'macos') }} || sudo sed -i '' -e 's/.*localhost.*/127.0.0.1 localhost/g' /etc/hosts
-          - uses: actions/checkout@v3
+          - uses: actions/checkout@v4
           - uses: actions/setup-node@v3
             with:
               node-version: ${{ matrix.node-version }}
