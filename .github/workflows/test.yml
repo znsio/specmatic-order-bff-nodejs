@@ -24,6 +24,12 @@ jobs:
           - run: ${{ !startsWith(matrix.os, 'ubuntu') }} || sudo sed -i '/localhost/c\127.0.0.1 localhost' /etc/hosts
           - run: ${{ !startsWith(matrix.os, 'macos') }} || sudo sed -i '' -e 's/.*localhost.*/127.0.0.1 localhost/g' /etc/hosts
           - uses: actions/checkout@v4
+          - name: Set up JRE 17
+            uses: actions/setup-java@v4
+            with:
+              distribution: 'orcale' # See 'Supported distributions' for available options
+              java-version: '17'
+              java-package: 'jre'
           - uses: actions/setup-node@v3
             with:
               node-version: ${{ matrix.node-version }}
