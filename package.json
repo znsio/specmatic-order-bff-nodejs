@@ -15,7 +15,7 @@
     "debug": "~4.3.4",
     "express": "~4.18.2",
     "kafkajs": "^2.2.4",
-    "specmatic": "^1.2.22"
+    "specmatic": "^1.3.2"
   },
   "specmatic": {
     "logLevel": "debug"
