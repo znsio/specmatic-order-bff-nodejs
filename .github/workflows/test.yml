@@ -9,7 +9,7 @@ jobs:
     test:
         strategy:
           matrix:
-            node-version: [14.x, 16.x, 18.x, 20.x]
+            node-version: [18.x, 20.x]
             os: [ubuntu-latest, windows-latest, macos-latest]
             # Node 18.x needs for ipv6 entry modification in hosts file and how do it on widnows is not clear
             # due to permissions required etc
