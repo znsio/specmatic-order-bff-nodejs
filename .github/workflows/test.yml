@@ -30,7 +30,7 @@ jobs:
               distribution: 'temurin' # See 'Supported distributions' for available options
               java-version: '17'
               java-package: 'jre'
-          - uses: actions/setup-node@v3
+          - uses: actions/setup-node@v4
             with:
               node-version: ${{ matrix.node-version }}
           - run: npm install
