@@ -3,12 +3,12 @@
     {
       "provider": "git",
       "repository": "https://github.com/znsio/specmatic-order-contracts.git",
+      "test": [
+        "in/specmatic/examples/store/product_search_bff_api_v2.yaml"
+      ],
       "stub": [
         "in/specmatic/examples/store/api_order_v1.yaml",
         "in/specmatic/examples/store/kafka.yaml"
-      ],
-      "test": [
-        "in/specmatic/examples/store/product_search_bff_api_v2.yaml"
       ]
     }
   ]
