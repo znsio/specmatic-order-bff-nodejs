@@ -27,6 +27,10 @@ A typical web application might look like this. We can use Specmatic to practice
 4. Specmatic Beta extension (for mocking Kafka)
 5. Jest & SuperTest
 
+### Install Dependencies
+1. Run `npm install`
+2. Run `npm install git+https://github.com/znsio/specmatic-node-beta.git#<version>`. Replace `<version>` with the correct version from package.json.
+
 ### Start BFF Application
 This will start the main nodejs application providing backend service for frontend (BFF)
 ```shell
