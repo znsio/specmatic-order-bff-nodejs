@@ -2,13 +2,13 @@
 ![tests](https://github.com/znsio/specmatic-order-backend-nodejs/actions/workflows/test.yml/badge.svg)
 
 * [Specmatic Website](https://specmatic.in)
-* [Specmatic Documenation](https://specmatic.in/documentation.html)
+* [Specmatic Documentation](https://specmatic.in/documentation.html)
 
 This sample project demonstrates how we can practice contract-driven development and contract testing in a NodeJS application that depends on an external domain service and Kafka. Here, specmatic is used to stub calls to domain API service based on its OpenAPI spec and mock Kafka based on its AsyncAPI spec.
 
-Here is the [OpenAPI spec](https://github.com/znsio/specmatic-order-contracts/blob/main/in/specmatic/examples/store/API_order_v1.yaml) of the domain API that defines the API endpoints, its request parameters and response along with their schema.
+Here is the [OpenAPI spec](https://github.com/znsio/specmatic-order-contracts/blob/main/in/specmatic/examples/store/api_order_v3.yaml) of the domain API that defines the API endpoints, its request parameters and response along with their schema.
 
-Here is the [AsyncAPI spec](https://github.com/znsio/specmatic-order-contracts/blob/main/in/specmatic/examples/store/API_order_v1.yaml) of Kafka that defines the topics and message schema.
+Here is the [AsyncAPI spec](https://github.com/znsio/specmatic-order-contracts/blob/main/in/specmatic/examples/store/kafka.yaml) of Kafka that defines the topics and message schema.
 
 ## Definitions
 * BFF: Backend for Front End
@@ -36,15 +36,16 @@ This will start the main nodejs application providing backend service for fronte
 ```shell
 npm start
 ```
-Access find orders API at http://localhost:8080/findAvailableProducts. This is used to demo HTTP stubbing using OpenAPI and Kafka mocking using AsyncAPI<br>
-_*Note:* Unless domain API service and Kafka mocks are running, the above requests will fail. Move to the next section for the solution!_
+Access find orders API at http://localhost:3000/findAvailableProducts. This is used to demo HTTP stubbing using OpenAPI and Kafka mocking using AsyncAPI<br>
+
+_**Note:** Unless domain API service and Kafka mocks are running, the above requests will fail. Move to the next section for the solution!_
 
 ### Start BFF Server with Dependencies (Domain API Stub and Kafka Mock Servers)
 This will start the nodejs based BFF server with domain API stubbed using Specmatic HTTP stub server and Kafka mocked using Specmatic Kafka mock server to demonstrate workings of the stub server
 ```shell
 npm run startWithDeps
 ```
-Access find orders API again at http://localhost:8080/findAvailableProducts with a result like
+Access the find orders API at http://localhost:3000/findAvailableProducts **with a header of pageSize: number**. The result should be like
 ```json
 [{"id":698,"name":"NUBYR","type":"book","inventory":278}]
 ```
@@ -52,7 +53,7 @@ Access find orders API again at http://localhost:8080/findAvailableProducts with
 ### Run Tests
 This will start the Specmatic HTTP stub server for domain API and Specmatic Kafka mock server using the information in specmatic.json and run tests to validate BFF APIs.
 ```shell
-npm run test-ci
+npm run test
 ```
 
 ## Troubleshooting
@@ -68,7 +69,7 @@ npm run test-ci
     ```json
     {
         ...
-        "test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 node --experimental-vm-modules ./node_modules/.bin/jest --collectCoverage --detectOpenHandles"
+        "test" : "cross-env SPECMATIC_GENERATIVE_TESTS=true NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 node ./node_modules/jest/bin/jest.js --collectCoverage --detectOpenHandles"
         ...
     }
     ```
