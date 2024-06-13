@@ -1,18 +1,35 @@
-const express = require('express')
+const express = require("express");
+const { ValidationError } = require("express-json-validator-middleware");
 
-const productsRouter = require('./routes/product')
+const dotenv = require("dotenv");
+dotenv.config();
 
-const app = express()
+const app = express();
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use('/', productsRouter)
+const productRouter = require("./routes/products");
+const orderRouter = require("./routes/orders");
+app.use("/", productRouter);
+app.use("/", orderRouter);
 
-app.all('*', function (req, res) {
-    res.status(404).json({
-        error: `route ${req.url} not found`,
-    })
-})
+app.use((err, req, res, next) => {
+  if (err instanceof ValidationError) {
+    return res.status(400).json({
+      timestamp: new Date().toISOString(),
+      status: 400,
+      error: "Bad Request",
+      message: "Invalid Request Body",
+    });
+  }
 
-module.exports = app
+  return res.status(err.status || 500).json({
+    timestamp: new Date().toISOString(),
+    status: err.status || 500,
+    error: err.name || "Server error",
+    message: err.message || "Something went wrong",
+  });
+});
+
+module.exports = app;
