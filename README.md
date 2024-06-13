@@ -36,7 +36,7 @@ This will start the main nodejs application providing backend service for fronte
 ```shell
 npm start
 ```
-Access find orders API at http://localhost:3000/findAvailableProducts. This is used to demo HTTP stubbing using OpenAPI and Kafka mocking using AsyncAPI<br>
+Access find orders API at http://localhost:8080/findAvailableProducts. This is used to demo HTTP stubbing using OpenAPI and Kafka mocking using AsyncAPI<br>
 
 _**Note:** Unless domain API service and Kafka mocks are running, the above requests will fail. Move to the next section for the solution!_
 
@@ -45,7 +45,7 @@ This will start the nodejs based BFF server with domain API stubbed using Specma
 ```shell
 npm run startWithDeps
 ```
-Access the find orders API at http://localhost:3000/findAvailableProducts **with a header of pageSize: number**. The result should be like
+Access the find orders API at http://localhost:8080/findAvailableProducts **with a header of pageSize: number**. The result should be like
 ```json
 [{"id":698,"name":"NUBYR","type":"book","inventory":278}]
 ```
