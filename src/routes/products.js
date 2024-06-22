@@ -20,6 +20,8 @@ const productSchema = {
     },
     inventory: {
       type: "number",
+      minimum: 1,
+      maximum: 101,
     },
     description: {
       type: "string",
