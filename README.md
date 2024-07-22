@@ -1,14 +1,14 @@
 # Specmatic Sample: NodeJS BFF calling Domain API
 ![tests](https://github.com/znsio/specmatic-order-backend-nodejs/actions/workflows/test.yml/badge.svg)
 
-* [Specmatic Website](https://specmatic.in)
-* [Specmatic Documentation](https://specmatic.in/documentation.html)
+* [Specmatic Website](https://specmatic.io)
+* [Specmatic Documentation](https://specmatic.io/documentation.html)
 
 This sample project demonstrates how we can practice contract-driven development and contract testing in a NodeJS application that depends on an external domain service and Kafka. Here, specmatic is used to stub calls to domain API service based on its OpenAPI spec and mock Kafka based on its AsyncAPI spec.
 
-Here is the [OpenAPI spec](https://github.com/znsio/specmatic-order-contracts/blob/main/in/specmatic/examples/store/api_order_v3.yaml) of the domain API that defines the API endpoints, its request parameters and response along with their schema.
+Here is the [OpenAPI spec](https://github.com/znsio/specmatic-order-contracts/blob/main/io/specmatic/examples/store/openapi/api_order_v3.yaml) of the domain API that defines the API endpoints, its request parameters and response along with their schema.
 
-Here is the [AsyncAPI spec](https://github.com/znsio/specmatic-order-contracts/blob/main/in/specmatic/examples/store/kafka.yaml) of Kafka that defines the topics and message schema.
+Here is the [AsyncAPI spec](https://github.com/znsio/specmatic-order-contracts/blob/main/io/specmatic/examples/store/asyncapi/kafka.yaml) of Kafka that defines the topics and message schema.
 
 ## Definitions
 * BFF: Backend for Front End
