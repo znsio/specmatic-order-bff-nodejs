@@ -17,13 +17,13 @@ readdirSync(test_folder).map(
   async (fileName) => await specmatic.setExpectations(path.join(test_folder, fileName), httpStub.url)
 );
 
-await specmatic.setKafkaMockExpectations(kafkaMock, [{ topic: "product-queries", count: 5 }]);
+await specmatic.setKafkaMockExpectations(kafkaMock, [{ topic: "product-queries", count: 2 }]);
 
 await specmatic.testWithApiCoverage(getApp(), process.env.APP_HOST, process.env.APP_PORT);
 
 const verificationResult = await specmatic.verifyKafkaMock(kafkaMock);
 console.log(`Kafka mock verification: ${verificationResult}`);
-// test("Kafka mock verification", () => expect(verificationResult).toBe(true));
+test("Kafka mock verification", () => expect(verificationResult).toBe(true));
 test("Uppercase string", () => expect("Specmatic".toUpperCase()).toBe("SPECMATIC"));
 
 await stopAppServer(appServer);

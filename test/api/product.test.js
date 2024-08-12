@@ -15,7 +15,7 @@ beforeAll(async () => {
   kafkaMock = await specmatic.startKafkaMock(process.env.KAFKA_BROKER_PORT);
   httpStub = await specmatic.startHttpStub(process.env.HTTP_STUB_HOST, process.env.HTTP_STUB_PORT);
   await specmatic.setHttpStubExpectations("test-resources/stub_products_200.json", httpStub.url);
-  await specmatic.setKafkaMockExpectations(kafkaMock, [{ topic: "product-queries", count: 3 }]);
+  await specmatic.setKafkaMockExpectations(kafkaMock, [{ topic: "product-queries", count: 1 }]);
 }, TEST_TIMEOUT_MS);
 
 test(

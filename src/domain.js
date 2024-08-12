@@ -26,22 +26,21 @@ async function searchProducts(type) {
   try {
     const resp = await axios.get(`${domainUrl}${productEndpoints.SEARCH}${type ? `?type=${type}` : ""}`);
     const products = resp.data;
+    const product = products[0];
 
     await kafkaProducer.connect();
-    for (const product of products) {
-      await kafkaProducer.send({
-        topic: kafkaTopic,
-        messages: [
-          {
-            value: JSON.stringify({
-              id: product.id,
-              name: product.name,
-              inventory: product.inventory,
-            }),
-          },
-        ],
-      });
-    }
+    await kafkaProducer.send({
+      topic: kafkaTopic,
+      messages: [
+        {
+          value: JSON.stringify({
+            id: product.id,
+            name: product.name,
+            inventory: product.inventory,
+          }),
+        },
+      ],
+    });
     await kafkaProducer.disconnect();
 
     return products;
