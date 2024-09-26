@@ -13,6 +13,7 @@ const productRouter = require("./routes/products");
 const orderRouter = require("./routes/orders");
 app.use("/", productRouter);
 app.use("/", orderRouter);
+app.use("/v1.0/test/:param1/test/:param2/test", productRouter);
 
 app.use((err, req, res, next) => {
   if (err instanceof ValidationError) {

@@ -3,7 +3,7 @@ name: Run tests
 on:
   push:
     branches:
-      - main
+      - specmatic_node_git 
 
 jobs:
     test:
