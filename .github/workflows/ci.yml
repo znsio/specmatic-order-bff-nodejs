@@ -14,7 +14,9 @@ jobs:
         runs-on: ${{ matrix.os }}
         steps:
           - uses: actions/checkout@v4
-          
+            with:
+              path: main
+
           - name: Set up JRE 17
             uses: actions/setup-java@v4
             with:
@@ -32,3 +34,9 @@ jobs:
           
           - name: Run npm test
             run: npm run test-ci
+
+          - name: Upload HTML Test Report
+            uses: actions/upload-artifact@v4
+            with:
+              name: ${{ matrix.os }}-${{ matrix.node-version }}-html-report
+              path: main/build/reports/specmatic/html
