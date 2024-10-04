@@ -11,9 +11,18 @@ app.use(express.urlencoded({ extended: false }));
 
 const productRouter = require("./routes/products");
 const orderRouter = require("./routes/orders");
+
+// TESTING CODE
+const subRouter = express.Router();
+subRouter.get("/:param1/:param2", (req, res) => {});
+orderRouter.use("/orders/", subRouter);
+
+app.use("/v1.0/test/:param1/test/:param2/test", productRouter);
+app.use(subRouter)
+// TESTING CODE
+
 app.use("/", productRouter);
 app.use("/", orderRouter);
-app.use("/v1.0/test/:param1/test/:param2/test", productRouter);
 
 app.use((err, req, res, next) => {
   if (err instanceof ValidationError) {
