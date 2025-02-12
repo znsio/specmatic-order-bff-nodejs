@@ -10,7 +10,7 @@ config();
 const kafkaMock = await specmatic.startKafkaMock(process.env.KAFKA_BROKER_PORT);
 const httpStub = await specmatic.startHttpStub(process.env.HTTP_STUB_HOST, process.env.HTTP_STUB_PORT);
 const appServer = await startAppServer(process.env.APP_PORT);
-const excludedEndpoints = "'/internal/metrics'";
+const excludedEndpoints = "'/health'";
 process.env.FILTER = `PATH!=${excludedEndpoints}`;
 const test_folder = "test-resources";
 
