@@ -3,7 +3,7 @@ name: Run tests
 on:
   push:
     branches:
-      - specmatic_node_git 
+      - endpoints_test 
 
 jobs:
     test:
@@ -32,6 +32,12 @@ jobs:
           
           - name: Run npm test
             run: npm run test-ci
+
+          - name: Upload HTML Test Report
+            uses: actions/upload-artifact@v4
+            with:
+              name: ${{ matrix.os }}-${{ matrix.node-version }}-html-report
+              path: build/reports/specmatic/html
 
           - name: Upload HTML Test Report
             uses: actions/upload-artifact@v4
