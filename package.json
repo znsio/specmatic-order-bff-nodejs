@@ -6,7 +6,7 @@
     "start": "set DEBUG=specmatic-order-backend-nodejs:* && node ./src/bin/www",
     "startWithDeps": "concurrently --kill-others \"npm run start\" \"specmatic stub --port 8090\" \"specmatic kafka --port 9092\"",
     "startDeps": "concurrently --kill-others \"specmatic stub --port 8090\" \"specmatic kafka --port 9092\"",
-    "test": "cross-env SPECMATIC_GENERATIVE_TESTS=true NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 node ./node_modules/jest/bin/jest.js --collectCoverage --detectOpenHandles",
+    "test": "cross-env SPECMATIC_GENERATIVE_TESTS=true NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 node ./node_modules/jest/bin/jest.js --collectCoverage --detectOpenHandles --verbose=true",
     "test-ci": "cross-env SPECMATIC_LOG_LEVEL=debug DEBUG=specmatic-order-backend-nodejs:* npm run test"
   },
   "dependencies": {
@@ -27,7 +27,7 @@
     "jest": "^29.7.0",
     "node-fetch": "^3.3.2",
     "specmatic": "^2.5.0",
-    "specmatic-beta": "github:znsio/specmatic-node-beta#039b56f",
+    "specmatic-beta": "github:znsio/specmatic-node-beta#039b56f89aede4ea0854dec81ee71954e0fc6d2a",
     "supertest": "^7.0.0"
   }
 }
