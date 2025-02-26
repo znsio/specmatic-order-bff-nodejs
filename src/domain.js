@@ -24,7 +24,7 @@ const productEndpoints = {
 // PRODUCT ENDPOINTS
 async function searchProducts(type) {
   try {
-    const resp = await axios.get(`${domainUrl}${productEndpoints.SEARCH}${type ? `?type=${type}` : ""}`);
+    const resp = await axios.get(`${domainUrl}${productEndpoints.SEARCH}${type ? `?type=${type}` : ""}`, { timeout: 3000 });
     const products = resp.data;
     const product = products[0];
 

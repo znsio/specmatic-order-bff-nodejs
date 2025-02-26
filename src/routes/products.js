@@ -141,15 +141,40 @@ router.get(
       throw ApiError.BadRequest("pageSize must be a number");
     }
 
-    if (req.query.type === "other" || pageSize > 20) {
-      throw ApiError.TimeoutError("Product type was other");
-    }
 
     const products = await ProductService.searchProducts(req.query.type);
     return res.status(200).json(products);
   })
 );
 
+/**
+ * @openapi
+ * /products:
+ *   post:
+ *     summary: Create a new product
+ *     tags: [Products]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Product'
+ *     responses:
+ *       201:
+ *         description: Product created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/Product'
+ *                 - type: object
+ *                   properties:
+ *                     id:
+ *                       type: number
+ *                       example: 1
+ *       400:
+ *         $ref: '#/components/responses/Error' 
+ */
 router.post(
   "/products",
   validate({ body: productSchema }),
