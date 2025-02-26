@@ -1,3 +1,52 @@
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       required:
+ *         - name
+ *         - type
+ *         - inventory
+ *       properties:
+ *         name:
+ *           type: string
+ *         type:
+ *           type: string
+ *           enum: [book, gadget, food, other]
+ *         inventory:
+ *           type: number
+ *           minimum: 1
+ *           maximum: 101
+ *         description:
+ *           type: string
+ *     Order:
+ *       type: object
+ *       required:
+ *         - productid
+ *         - count
+ *       properties:
+ *         productid:
+ *           type: number
+ *         count:
+ *           type: number
+ *         status:
+ *           type: string
+ *           enum: [pending]
+ *     Error:
+ *       type: object
+ *       properties:
+ *         timestamp:
+ *           type: string
+ *           format: date-time
+ *         status:
+ *           type: number
+ *         error:
+ *           type: string
+ *         message:
+ *           type: string
+ */
+
 const express = require("express");
 const expressValidator = require("express-json-validator-middleware");
 const ProductService = require("../services/products");
@@ -40,6 +89,34 @@ const productTypeSchema = {
   },
 };
 
+/**
+ * @openapi
+ * /findAvailableProducts:
+ *   get:
+ *     summary: Find available products
+ *     parameters:
+ *       - in: query
+ *         name: type
+ *         schema:
+ *           type: string
+ *           enum: [book, gadget, food, other]
+ *         required: false
+ *       - in: header
+ *         name: pageSize
+ *         required: true
+ *         schema:
+ *           type: number
+ *           maximum: 20
+ *     responses:
+ *       200:
+ *         description: List of products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Product'
+ */
 router.get(
   "/findAvailableProducts",
   validate({ query: productTypeSchema }),
