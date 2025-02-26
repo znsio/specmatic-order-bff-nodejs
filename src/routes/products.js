@@ -115,7 +115,17 @@ const productTypeSchema = {
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Product'
+ *                 type: object
+ *               properties:
+ *                 id:
+ *                   type: number
+ *                 name:
+ *                   type: string
+ *                 type:
+ *                   type: string
+ *                   enum: [book, gadget, food, other]
+ *                 inventory:
+ *                   type: number
  */
 router.get(
   "/findAvailableProducts",

@@ -39,13 +39,10 @@ const orderSchema = {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Order'
- *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: number
  */
 router.post(
   "/orders",
