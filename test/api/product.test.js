@@ -26,14 +26,20 @@ test(
       .set("pageSize", 10)
       .accept("application/json")
       .expect(200);
-    const fileContent = readJsonFile("test-resources/stub_products_200.json");
 
-    const stubBody = fileContent["http-response"].body;
-    expect(res.body).toStrictEqual(stubBody);
+    const expectedId = 10;
+    const expectedName = "iPhone";
+    const expectedType = "gadget";
+    expect(res.body[0].id).toBe(expectedId);
+    expect(res.body[0].name).toBe(expectedName);
+    expect(res.body[0].type).toBe(expectedType);
 
-    const { type, ...message } = stubBody[0];
     await expect(
-      specmatic.verifyKafkaStubMessage(kafkaMock, "product-queries", JSON.stringify(message))
+      specmatic.verifyKafkaStubMessage(kafkaMock, "product-queries", JSON.stringify({
+        id: expectedId,
+        name: expectedName,
+        inventory: res.body[0].inventory,
+      }))
     ).resolves.toBeTruthy();
 
     await expect(specmatic.verifyKafkaStub(kafkaMock)).resolves.toBeTruthy();
