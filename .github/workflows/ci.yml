@@ -45,7 +45,7 @@ jobs:
               docker run \
                 -v ${{ github.workspace }}:/workspace \
                 znsio/specmatic-insights-github-build-reporter:latest \
-                  --specmatic-insights-host https://insights.specmatic.in \
+                  --specmatic-insights-host https://new-insights.specmatic.io \
                   --specmatic-reports-dir /workspace/build/reports/specmatic \
                   --org-id ${{ secrets.SPECMATIC_ORG_ID }} \
                   --branch-ref ${{ github.ref }} \
